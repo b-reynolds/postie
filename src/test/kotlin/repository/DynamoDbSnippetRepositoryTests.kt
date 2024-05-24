@@ -1,7 +1,7 @@
 package repository
 
+import api.configuration.moshi
 import domain.Snippet
-import moshi
 import org.http4k.aws.AwsCredentials
 import org.http4k.connect.amazon.core.model.Region
 import org.http4k.connect.amazon.dynamodb.DynamoDb
@@ -20,7 +20,7 @@ import strikt.assertions.isEqualTo
 import java.time.Instant
 import java.util.UUID
 
-class DynamoDbSnippetRepositoryTest {
+class DynamoDbSnippetRepositoryTests {
     @Test
     fun `insert() with valid DynamoDB configuration succeeds`() {
         expectThat(
@@ -77,7 +77,7 @@ class DynamoDbSnippetRepositoryTest {
 }
 
 private val snippet = Snippet(
-    id = UUID.randomUUID().toString(),
+    id = UUID.randomUUID(),
     title = "title",
     contents = "contents",
     format = "txt",

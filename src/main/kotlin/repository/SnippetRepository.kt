@@ -2,27 +2,28 @@ package repository
 
 import arrow.core.Either
 import domain.Snippet
+import java.util.UUID
 
 /**
- * [Snippet] repository.
+ * [Snippet] api.getRepository.
  *
  * Provides methods for storing/retrieving [Snippet]s.
  */
 interface SnippetRepository {
     /**
-     * Inserts a [Snippet] into the repository.
+     * Inserts a [Snippet] into the api.getRepository.
      */
     fun insert(snippet: Snippet): Either<Error.InsertItemError, Unit>
 
     /**
      * Retrieves a [Snippet] by its ID.
      */
-    fun get(id: String): Either<Error.GetItemError, Snippet>
+    fun get(id: UUID): Either<Error.GetItemError, Snippet>
 
     /**
      * [SnippetRepository] errors.
      */
-    sealed class Error(val message: String) {
+    sealed class Error(open val message: String) {
         /**
          * Errors that can result from calling [SnippetRepository.insert].
          */
@@ -30,7 +31,7 @@ interface SnippetRepository {
             /**
              * Unexpected failure.
              */
-            class Failure(message: String) : InsertItemError(message)
+            data class Failure(override val message: String) : InsertItemError(message)
         }
 
         /**
@@ -42,15 +43,12 @@ interface SnippetRepository {
              *
              * @param id ID of the snippet that was not found.
              */
-            class NotFound(val id: String) : GetItemError("Snippet with id '$id' not found")
+            data class NotFound(val id: UUID) : GetItemError("Snippet with id '$id' not found")
 
             /**
              * Unexpected failure.
              */
-            class Failure(message: String) : GetItemError(message)
+            data class Failure(override val message: String) : GetItemError(message)
         }
     }
 }
-
-
-

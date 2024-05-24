@@ -16,6 +16,7 @@ import org.http4k.connect.amazon.dynamodb.putItem
 import org.http4k.format.AutoMarshalling
 import org.http4k.format.autoDynamoLens
 import repository.SnippetRepository.Error
+import java.util.UUID
 
 /**
  * [SnippetRepository] implementation backed by DynamoDB.
@@ -38,9 +39,9 @@ class DynamoDbSnippetRepository(
             .mapLeft { failure -> Error.InsertItemError.Failure(failure.message.orEmpty()) }
             .map { }
 
-    override fun get(id: String): Either<Error.GetItemError, Snippet> = either {
+    override fun get(id: UUID): Either<Error.GetItemError, Snippet> = either {
         val response = client
-            .getItem(tableName, mapOf(AttributeName.of(Snippet.ID) to AttributeValue.Str(id)))
+            .getItem(tableName, mapOf(AttributeName.of(Snippet.ID) to AttributeValue.Str(id.toString())))
             .toEither()
             .mapLeft { failure -> Error.GetItemError.Failure(failure.message.orEmpty()) }
             .bind()

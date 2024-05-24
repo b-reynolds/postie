@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm") version "2.0.0"
     id("com.google.devtools.ksp") version "2.0.0-1.0.21"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 group = "dev.benreynolds"
@@ -14,6 +15,8 @@ dependencies {
     implementation("io.arrow-kt:arrow-core:1.2.4")
 
     implementation("org.http4k:http4k-connect-amazon-dynamodb:5.13.0.0")
+    implementation("org.http4k:http4k-serverless-lambda:5.13.0.0")
+    implementation("com.amazonaws:aws-lambda-java-events:3.8.0")
     implementation("org.http4k:http4k-format-moshi") {
         exclude("org.jetbrains.kotlin", "kotlin-reflect")
     }

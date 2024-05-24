@@ -2,10 +2,11 @@ package domain
 
 import se.ansman.kotshi.JsonSerializable
 import java.time.Instant
+import java.util.UUID
 
 @JsonSerializable
 data class Snippet(
-    val id: String,
+    val id: UUID,
     val title: String,
     val contents: String,
     val createdAt: Instant,
