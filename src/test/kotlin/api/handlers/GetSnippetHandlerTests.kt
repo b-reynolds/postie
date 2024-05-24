@@ -2,7 +2,6 @@ package api.handlers
 
 import api.PathParam
 import api.configuration.moshi
-import api.handlers.GetSnippetHandler
 import arrow.core.left
 import arrow.core.right
 import domain.Snippet
