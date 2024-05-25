@@ -47,7 +47,7 @@ tasks.test {
 }
 
 tasks.withType<ShadowJar> {
-    archiveFileName.set("postie.jar")
+    archiveFileName = "${rootProject.name}.jar"
     minimize()
 }
 
