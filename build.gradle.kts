@@ -16,7 +16,6 @@ dependencies {
 
     implementation("org.http4k:http4k-connect-amazon-dynamodb:5.13.0.0")
     implementation("org.http4k:http4k-serverless-lambda:5.13.0.0")
-    implementation("com.amazonaws:aws-lambda-java-events:3.8.0")
     implementation("org.http4k:http4k-format-moshi") {
         exclude("org.jetbrains.kotlin", "kotlin-reflect")
     }
