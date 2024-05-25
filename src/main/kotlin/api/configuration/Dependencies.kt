@@ -1,5 +1,6 @@
 package api.configuration
 
+import api.validation.SnippetValidator
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import org.http4k.client.JavaHttpClient
@@ -50,6 +51,8 @@ val repository: SnippetRepository by lazy {
         autoMarshalling = moshi
     )
 }
+
+val snippetValidator = SnippetValidator(100_000)
 
 @KotshiJsonAdapterFactory
 private object JsonAdapterFactory : JsonAdapter.Factory by KotshiJsonAdapterFactory

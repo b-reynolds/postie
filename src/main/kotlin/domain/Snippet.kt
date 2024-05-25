@@ -7,7 +7,7 @@ import java.util.UUID
 @JsonSerializable
 data class Snippet(
     val id: UUID,
-    val title: String,
+    val title: String = "",
     val contents: String,
     val createdAt: Instant,
     val format: String? = null,

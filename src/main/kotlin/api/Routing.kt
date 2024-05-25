@@ -2,6 +2,7 @@ package api
 
 import api.configuration.moshi
 import api.configuration.repository
+import api.configuration.snippetValidator
 import api.handlers.CreateSnippetHandler
 import api.handlers.GetSnippetHandler
 import org.http4k.core.HttpHandler
@@ -13,7 +14,7 @@ import org.http4k.serverless.ApiGatewayV2LambdaFunction
 @Suppress("unused")
 class Routing(
     private val getSnippetHandler: HttpHandler = GetSnippetHandler(repository, moshi),
-    private val createSnippetHandler: HttpHandler = CreateSnippetHandler(repository, moshi)
+    private val createSnippetHandler: HttpHandler = CreateSnippetHandler(repository, moshi, snippetValidator)
 ) : ApiGatewayV2LambdaFunction(
     routes(
         Path.GET_SNIPPET bind Method.GET to getSnippetHandler::invoke,
