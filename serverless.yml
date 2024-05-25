@@ -1,0 +1,45 @@
+service: postie
+provider:
+  name: aws
+  runtime: java21
+  stage: dev
+  region: eu-west-2
+  memorySize: 1472
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - 'dynamodb:GetItem'
+            - 'dynamodb:PutItem'
+          Resource:
+            - Fn::GetAtt: [SnippetsTable, Arn]
+resources:
+  Resources:
+    SnippetsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: snippets
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+      DeletionPolicy: Retain
+package:
+  artifact: build/libs/postie.jar
+
+functions:
+  SnippetsApi:
+    handler: api.Routing
+    events:
+      - httpApi:
+          method: GET
+          path: /snippets/{id}
+      - httpApi:
+          method: POST
+          path: /snippets
