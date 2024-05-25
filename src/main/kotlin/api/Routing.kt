@@ -22,8 +22,12 @@ class Routing(
     )
 ) {
     object Path {
-        const val GET_SNIPPET = "/snippets/{${PathParam.SNIPPET_ID}}"
+        const val GET_SNIPPET = "/snippets/{${Param.SNIPPET_ID}}"
         const val CREATE_SNIPPET = "/snippets"
+
+        object Param {
+            const val SNIPPET_ID = "id"
+        }
     }
 }
 

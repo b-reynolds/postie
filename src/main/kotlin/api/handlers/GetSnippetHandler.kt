@@ -1,6 +1,6 @@
 package api.handlers
 
-import api.PathParam
+import api.Routing
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.raise.catch
@@ -65,8 +65,8 @@ class GetSnippetHandler(
 
     private val Request.snippetId: Either<Error, UUID>
         get() = either {
-            val raw = ensureNotNull(path(PathParam.SNIPPET_ID)) {
-                Error.MissingPathParam(PathParam.SNIPPET_ID)
+            val raw = ensureNotNull(path(Routing.Path.Param.SNIPPET_ID)) {
+                Error.MissingPathParam(Routing.Path.Param.SNIPPET_ID)
             }
 
             val uuid = catch({ UUID.fromString(raw) }) { _ ->

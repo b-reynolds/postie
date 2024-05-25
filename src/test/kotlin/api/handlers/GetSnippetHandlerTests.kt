@@ -1,6 +1,6 @@
 package api.handlers
 
-import api.PathParam
+import api.Routing
 import api.configuration.moshi
 import arrow.core.left
 import arrow.core.right
@@ -23,7 +23,7 @@ import java.util.UUID
 class GetSnippetHandlerTests {
     private val repository = mockk<SnippetRepository>()
     private val handler = GetSnippetHandler(repository, moshi)
-    private val routing = "/{${PathParam.SNIPPET_ID}}" bind Method.GET to handler::invoke
+    private val routing = "/{${Routing.Path.Param.SNIPPET_ID}}" bind Method.GET to handler::invoke
 
     @Test
     fun `Request for snippet that exists responds with HTTP 200`() {
