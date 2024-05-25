@@ -52,6 +52,19 @@ class GetSnippetHandlerTests {
     }
 
     @Test
+    fun `Request for snippet that exists but has expired responds with HTTP 404`() {
+        every { repository.get(snippet.id) } returns snippet.copy(expiresAt = Instant.now().minusNanos(1)).right()
+        val response = routing.invoke(Request(Method.GET, "/${snippet.id}"))
+
+        expectThat(response.status)
+            .isEqualTo(Status.NOT_FOUND)
+        expectThat(response.contentType())
+            .isEqualTo(ContentType.APPLICATION_JSON)
+        expectThat(response.bodyString())
+            .isEqualTo("""{"error":"snippet_not_found","status":404,"message":"Snippet not found with id: ${snippet.id}"}""")
+    }
+
+    @Test
     fun `Request for snippet with invalid UUID responds with HTTP 400`() {
         val snippetId = "snippetId"
         val response = routing.invoke(Request(Method.GET, "/$snippetId"))

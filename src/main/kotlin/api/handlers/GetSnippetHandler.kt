@@ -2,7 +2,6 @@ package api.handlers
 
 import api.PathParam
 import arrow.core.Either
-import arrow.core.flatMap
 import arrow.core.left
 import arrow.core.raise.catch
 import arrow.core.raise.either
@@ -26,6 +25,7 @@ import repository.SnippetRepository
 import se.ansman.kotshi.JsonSerializable
 import se.ansman.kotshi.Polymorphic
 import se.ansman.kotshi.PolymorphicLabel
+import java.time.Instant
 import java.util.UUID
 
 class GetSnippetHandler(
@@ -39,14 +39,16 @@ class GetSnippetHandler(
         }
         .toResponse()
 
-    private fun handle(request: Request): Either<Error, Snippet> =
-        request
-            .snippetId
-            .flatMap { id ->
-                repository
-                    .get(id)
-                    .mapLeft { Error.from(it) }
-            }
+    private fun handle(request: Request) = either {
+        val snippetId = request.snippetId.bind()
+
+        val snippet = repository.get(snippetId)
+            .mapLeft(Error.Companion::from)
+            .bind()
+            .takeUnless { snippet -> snippet.hasExpired }
+
+        snippet ?: raise(Error.NotFound(snippetId.toString()))
+    }
 
     private fun Either<Error, Snippet>.toResponse() = fold(
         ifLeft = { error ->
@@ -73,6 +75,8 @@ class GetSnippetHandler(
 
             return uuid.right()
         }
+
+    private val Snippet.hasExpired get() = expiresAt != null && expiresAt.isBefore(Instant.now())
 
     @JsonSerializable
     @Polymorphic("error")
