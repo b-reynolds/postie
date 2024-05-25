@@ -9,7 +9,7 @@ import domain.Snippet
 import java.time.Instant
 
 class SnippetValidator(
-    private val maxContentsLength: Int
+    private val contentsCharacterLimit: Int
 ) {
     fun validate(snippet: Snippet): Either<NonEmptyList<SnippetValidationError>, Snippet> = either {
         zipOrAccumulate(
@@ -19,8 +19,8 @@ class SnippetValidator(
                 }
             },
             {
-                ensure(snippet.contents.length < maxContentsLength) {
-                    SnippetValidationError.ContentsTooLarge(maxContentsLength)
+                ensure(snippet.contents.length < contentsCharacterLimit) {
+                    SnippetValidationError.ContentsTooLarge(contentsCharacterLimit)
                 }
             },
             {
@@ -37,8 +37,8 @@ class SnippetValidator(
         open val description: String,
     ) {
         data class ContentsTooLarge(
-            val sizeLimitKb: Int,
-            override val description: String = "Contents cannot be larger than $sizeLimitKb characters",
+            val characterLimit: Int,
+            override val description: String = "Contents cannot be larger than $characterLimit characters",
         ) : SnippetValidationError(description)
 
         data class ContentsCantBeEmpty(
