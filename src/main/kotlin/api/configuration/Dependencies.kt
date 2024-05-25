@@ -52,7 +52,9 @@ val repository: SnippetRepository by lazy {
     )
 }
 
-val snippetValidator = SnippetValidator(100_000)
+val snippetValidator by lazy {
+    SnippetValidator(100_000)
+}
 
 @KotshiJsonAdapterFactory
 private object JsonAdapterFactory : JsonAdapter.Factory by KotshiJsonAdapterFactory
