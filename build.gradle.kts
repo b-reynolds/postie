@@ -1,3 +1,5 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     kotlin("jvm") version "2.0.0"
     id("com.google.devtools.ksp") version "2.0.0-1.0.21"
@@ -33,6 +35,11 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+tasks.withType<ShadowJar> {
+    archiveFileName = "postie.jar"
+    minimize()
 }
 
 kotlin {
