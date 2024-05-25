@@ -13,24 +13,33 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    implementation("io.arrow-kt:arrow-core:1.2.4")
+val kotlinVersion = "2.0.0"
+val kspVersion = "2.0.0-1.0.21"
+val shadowVersion = "8.1.1"
+val arrowCoreVersion = "1.2.4"
+val http4kVersion = "5.13.0.0"
+val kotshiVersion = "2.15.0"
+val striktVersion = "0.34.0"
+val mockkVersion = "1.13.11"
 
-    implementation("org.http4k:http4k-connect-amazon-dynamodb:5.13.0.0")
-    implementation("org.http4k:http4k-serverless-lambda:5.13.0.0")
-    implementation("org.http4k:http4k-format-moshi") {
+dependencies {
+    implementation("io.arrow-kt:arrow-core:$arrowCoreVersion")
+
+    implementation("org.http4k:http4k-connect-amazon-dynamodb:$http4kVersion")
+    implementation("org.http4k:http4k-serverless-lambda:$http4kVersion")
+    implementation("org.http4k:http4k-format-moshi:$http4kVersion") {
         exclude("org.jetbrains.kotlin", "kotlin-reflect")
     }
 
-    implementation("se.ansman.kotshi:api:2.15.0")
+    implementation("se.ansman.kotshi:api:$kotshiVersion")
 
-    testImplementation(kotlin("test"))
-    testImplementation("io.strikt:strikt-core:0.34.0")
-    testImplementation("io.strikt:strikt-arrow:0.34.0")
-    testImplementation("io.mockk:mockk:1.13.11")
-    testImplementation("org.http4k:http4k-connect-amazon-dynamodb-fake:5.13.0.0")
+    testImplementation(kotlin("test", kotlinVersion))
+    testImplementation("io.strikt:strikt-core:$striktVersion")
+    testImplementation("io.strikt:strikt-arrow:$striktVersion")
+    testImplementation("io.mockk:mockk:$mockkVersion")
+    testImplementation("org.http4k:http4k-connect-amazon-dynamodb-fake:$http4kVersion")
 
-    ksp("se.ansman.kotshi:compiler:2.15.0")
+    ksp("se.ansman.kotshi:compiler:$kotshiVersion")
 }
 
 tasks.test {
@@ -38,7 +47,7 @@ tasks.test {
 }
 
 tasks.withType<ShadowJar> {
-    archiveFileName = "postie.jar"
+    archiveFileName.set("postie.jar")
     minimize()
 }
 
