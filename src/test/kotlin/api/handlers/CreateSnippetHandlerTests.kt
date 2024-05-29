@@ -1,6 +1,6 @@
 package api.handlers
 
-import api.configuration.moshi
+import api.configuration.serialization.moshi
 import api.dtos.CreateSnippetDto
 import api.validation.SnippetValidator
 import arrow.core.NonEmptyList

@@ -1,6 +1,6 @@
 package repository
 
-import api.configuration.moshi
+import api.configuration.serialization.moshi
 import domain.Snippet
 import org.http4k.aws.AwsCredentials
 import org.http4k.connect.amazon.core.model.Region
@@ -81,8 +81,8 @@ private val snippet = Snippet(
     title = "title",
     contents = "contents",
     format = "txt",
-    createdAt = Instant.now(),
-    expiresAt = Instant.now()
+    createdAt = Instant.ofEpochSecond(Instant.now().epochSecond),
+    expiresAt = Instant.ofEpochSecond(Instant.now().epochSecond)
 )
 
 private val dynamoDb get() = DynamoDb.Http(

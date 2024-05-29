@@ -1,7 +1,7 @@
 package api
 
-import api.configuration.moshi
 import api.configuration.repository
+import api.configuration.serialization.moshi
 import api.configuration.snippetValidator
 import api.handlers.CreateSnippetHandler
 import api.handlers.GetSnippetHandler

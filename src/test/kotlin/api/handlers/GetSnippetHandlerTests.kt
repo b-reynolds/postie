@@ -1,7 +1,7 @@
 package api.handlers
 
 import api.Routing
-import api.configuration.moshi
+import api.configuration.serialization.moshi
 import arrow.core.left
 import arrow.core.right
 import domain.Snippet
